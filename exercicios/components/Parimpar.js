@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, Text} from 'react-native'
+import { View, Text } from 'react-native'
 import Padrao from '../styles/Padrao'
 
 function parOuImpar(num){

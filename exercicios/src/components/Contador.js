@@ -7,9 +7,16 @@ export default class Contador extends Component{
         numero: this.props.numeroInicial
     }
 
+    //Caso usar funções diretas é necessário fazer o bind no construtor
+    // constructor(props){
+    //     super(props)
+    //     this.maisUm = this.maisUm.bind(this)
+    // }
+
     maisUm = () =>{
         this.setState({ numero: this.state.numero + 1 })
     }
+    //Usando arrow function ja resolve o problema do bind
     limpar = () =>{
         this.setState({ numero: this.props.numeroInicial })
     }

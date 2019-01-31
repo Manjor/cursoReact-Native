@@ -11,6 +11,8 @@ export default StyleSheet.create({
         fontWeight: 'bold',
     },
     input: {
+        width: '90%',
+        marginHorizontal: '5%',
         height: 60,
         fontSize: 40,
         borderColor:'gray',

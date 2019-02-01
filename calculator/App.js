@@ -1,30 +1,37 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
+import React, {Component} from 'react'
+import { Platform, StyleSheet, Text, View } from 'react-native'
+import Button from './src/components/Button'
+import Display from './src/components/Display'
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+export default class App extends Component{
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
-});
+  state = {
+    displayValue: '0'
+  }
 
-type Props = {};
-export default class App extends Component<Props> {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <Display value={this.state.displayValue}/>
+        <View style={styles.buttons}>
+          <Button label='AC'/>
+          <Button label='/'/>
+          <Button label='7'/>
+          <Button label='8'/>
+          <Button label='9'/>
+          <Button label='*'/>
+          <Button label='4'/>
+          <Button label='5'/>
+          <Button label='6'/>
+          <Button label='-'/>
+          <Button label='1'/>
+          <Button label='2'/>
+          <Button label='3'/>
+          <Button label='+'/>
+          <Button label='0'/>
+          <Button label='.'/>
+          <Button label='='/>
+        </View>
       </View>
     );
   }
@@ -32,19 +39,10 @@ export default class App extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    flex: 1
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  buttons:{
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  }
 });

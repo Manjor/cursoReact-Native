@@ -89,11 +89,16 @@ const pendding = field => (field.mined && !field.flagged)
 const wonGame = board => fields(board).filter(pendding).length === 0
 const showMines = board => fields(board).filter(field => field.mined)
 
+const invertFlag = (board,row,column) =>{
+    const field = board[ow][column]
+    field.flagged = !field.flagged
+}
 export {
     createMinedBoard,
     cloneBoard,
     openField,
     hadExplosion,
     wonGame,
-    showMines
+    showMines,
+    invertFlag
 }

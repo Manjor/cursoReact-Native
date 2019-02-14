@@ -11,9 +11,9 @@ export default props =>{
     let check = null
     if(props.doneAt !== null){
         check = (
-            <View style={StyleSheet.done}>
+            <View style={styles.done}>
                 <Icon name="check" size={20}
-                    color={commonStyles.color.secondary} />
+                    color={commonStyles.colors.secondary} />
             </View>
         )
     }else{

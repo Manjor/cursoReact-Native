@@ -14,36 +14,7 @@ import AddTask from './AddTask'
 export default class Agenda extends Component{
 
     state = {
-        tasks:[
-            { id: Math.random(), desc: 'Comprar Curso React Native',
-                estimateAt: new Date(), doneAt: new Date()},
-            { id: Math.random(), desc: 'Conluir o Curso',
-                estimateAt: new Date(), doneAt: null},
-            { id: Math.random(), desc: 'Comprar Curso React Native',
-                estimateAt: new Date(), doneAt: new Date()},
-            { id: Math.random(), desc: 'Conluir o Curso',
-                estimateAt: new Date(), doneAt: null},
-            { id: Math.random(), desc: 'Comprar Curso React Native',
-                estimateAt: new Date(), doneAt: new Date()},
-            { id: Math.random(), desc: 'Conluir o Curso',
-                estimateAt: new Date(), doneAt: null},
-            { id: Math.random(), desc: 'Comprar Curso React Native',
-                estimateAt: new Date(), doneAt: new Date()},
-            { id: Math.random(), desc: 'Conluir o Curso',
-                estimateAt: new Date(), doneAt: null},
-            { id: Math.random(), desc: 'Comprar Curso React Native',
-                estimateAt: new Date(), doneAt: new Date()},
-            { id: Math.random(), desc: 'Conluir o Curso',
-                estimateAt: new Date(), doneAt: null},
-            { id: Math.random(), desc: 'Comprar Curso React Native',
-                estimateAt: new Date(), doneAt: new Date()},
-            { id: Math.random(), desc: 'Conluir o Curso',
-                estimateAt: new Date(), doneAt: null},
-            { id: Math.random(), desc: 'Comprar Curso React Native',
-                estimateAt: new Date(), doneAt: new Date()},
-            { id: Math.random(), desc: 'Conluir o Curso',
-                estimateAt: new Date(), doneAt: null},
-        ],
+        tasks:[],
         visibleTask: [],
         showDoneTasks: true,
         showAddTask: false,
@@ -59,6 +30,11 @@ export default class Agenda extends Component{
         })
 
         this.setState({ tasks, showAddTask: false}, this.filterTasks)
+    }
+
+    deleteTask = id =>{
+        const tasks = this.state.tasks.filter(task => task.id !== id)
+        this.setState({ tasks }, this.filterTasks)
     }
 
     filterTasks = () =>{
@@ -82,7 +58,7 @@ export default class Agenda extends Component{
         this.filterTasks()
     }
 
-    toggleTask = id =>{
+    onToggleTask = id =>{
         const tasks = this.state.tasks.map(task =>{
             if(task.id === id){
                 task = {...task}
@@ -116,7 +92,7 @@ export default class Agenda extends Component{
                 </ImageBackground>
                 <View style={styles.tasksContainer}>
                     <FlatList data={this.state.visibleTask} keyExtractor={item => `${item.id}`}
-                        renderItem={({ item }) => <Task {...item} toggleTask={this.toggleTask} />} />
+                        renderItem={({ item }) => <Task {...item} onToggleTask={this.onToggleTask} onDelete={this.deleteTask} />} />
                 </View>
                 <ActionButton buttonColor={commonStyles.colors.today}
                     onPress={() => {this.setState({ showAddTask: true })}} />

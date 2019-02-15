@@ -5,6 +5,7 @@ import {
     Text,
     TextInput,
     DatePickerIOS,
+    DatePickerAndroid,
     StyleSheet,
     TouchableWithoutFeedback,
     TouchableOpacity,
@@ -32,7 +33,35 @@ export default class AddTask extends Component{
         this.setState({ ...initialState })
     }
 
+    handleDateAndroidChenged = () =>{
+        DatePickerAndroid.open({
+            date: this.state.date
+        }).then(event =>{
+            if(event.action !== DatePickerAndroid.dismissedAction){
+                const momentDate = moment(this.state.date)
+                momentDate.date(event.day)
+                momentDate.month(event.month)
+                momentDate.year(event.year)
+                this.setState({ date: momentDate.toDate() })
+            }
+        })
+    }
+
     render(){
+
+        let datePiker = null
+        if(Platform.OS === 'ios'){
+            datePiker = <DatePickerIOS mode='date' date={this.state.date}
+                            onDateChange={date => this.setState({ date })} />
+        }else{
+            datePiker = (
+                <TouchableOpacity onPress={this.handleDateAndroidChenged}>
+                    <Text style={styles.date}>
+                        {moment(this.state.date).format('ddd, D [de] MMMM [de] YYYY')}
+                    </Text>
+                </TouchableOpacity>
+            )
+        }
         return(
             <Modal onRequestClose={this.props.onCancel}
                 visible={this.props.isVisible}
@@ -45,12 +74,7 @@ export default class AddTask extends Component{
                     <TextInput placeholder="Descrição" style={styles.input}
                         onChangeText={desc => this.setState({ desc })}
                         value={this.state.desc} />
-                    {
-                        Platform.OS === 'ios'? 
-                        <DatePickerIOS mode='date' date={this.state.date}
-                            onDateChange={date => this.setState({ date })} /> :
-                            false
-                    }   
+                    {datePiker}
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end'}}>
                         <TouchableOpacity onPress={this.props.onCancel}>
                             <Text style={styles.button}>Cancelar</Text>
@@ -100,5 +124,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#e3e3e3',
         borderRadius: 6
+    },
+    date:{
+        fontFamily: commonStyles.fontFamily,
+        fontSize: 20,
+        marginHorizontal: 10,
+        textAlign: 'center'
     }
 })

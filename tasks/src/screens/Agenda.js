@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {
-    StyleSheet, Text, View, ImageBackground, FlatList, TouchableOpacity, Platform, Alert
+    StyleSheet, Text, View, ImageBackground, FlatList, TouchableOpacity, Platform, Alert,AsyncStorage
 } from 'react-native'
 import moment from 'moment'
 import 'moment/locale/pt-br'
@@ -47,6 +47,7 @@ export default class Agenda extends Component{
             visibleTask = this.state.tasks.filter(pending)
         }
         this.setState({ visibleTask })
+        AsyncStorage.setItem('tasks', JSON.stringify(this.state.tasks))
     }
 
     toggleFilter = ()=>{
@@ -54,8 +55,11 @@ export default class Agenda extends Component{
     }
 
     //Função que é chamada assim que o componente é renderizado
-    componentDidMount = () =>{
-        this.filterTasks()
+    componentDidMount = async () =>{
+        const data = await AsyncStorage.getItem('tasks')
+        const tasks = JSON.parse(data) || []
+        this.setState({ tasks },this.filterTasks())
+        
     }
 
     onToggleTask = id =>{

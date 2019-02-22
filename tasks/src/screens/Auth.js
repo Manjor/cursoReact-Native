@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import commonStyles from '../commonStyles'
 import backgroundImage from '../../assets/imgs/login.jpg'
+import AuthInput from '../components/AuthInput'
 
 export default class Auth extends Component {
 
@@ -39,19 +40,19 @@ export default class Auth extends Component {
                         {this.state.stateNew ? 'Cria a sua conta' : 'Informe seus Dados'}
                     </Text>
                     {this.state.stageNew &&
-                    <TextInput placeholder="Nome" style={styles.input}
+                    <AuthInput icon="user" placeholder="Nome" style={styles.input}
                                value={this.state.name}
                                onChangeText={name => this.setState({name})}/>}
-                    <TextInput placeholder="Email" style={styles.input}
+                    <AuthInput icon="at" placeholder="Email" style={styles.input}
                                value={this.state.email}
                                onChangeText={email => this.setState({email})}/>
-                    <TextInput placeholder='Senha' style={styles.input}
-                               value={this.state.passowrd}
-                               onChangeText={password => this.setState({password})}/>
+                    <AuthInput icon="lock" secureTextEntry={true} placeholder='Senha' style={styles.input}
+                               value={this.state.password}
+                               onChangeText={password => this.setState({ password })}/>
                     {this.state.stageNew &&
-                    <TextInput placeholder='Cofirmação' style={styles.input}
+                    <AuthInput icon="asterisk" secureTextEntry={true} placeholder='Cofirmação' style={styles.input}
                                value={this.state.confirmPassword}
-                               onChangeText={confirmPassword => this.setState({confirmPassword})}/>}
+                               onChangeText={confirmPassword => this.setState({ confirmPassword })}/>}
                     <TouchableOpacity onPress={this.signinOrSignup}>
                         <View style={styles.button}>
                             <Text style={styles.buttonText}>

@@ -15,7 +15,4 @@ module.exports = app =>{
     app.route('/tasks/:id/toggle')
         .all(app.config.passport.authenticate())
         .put(app.api.task.toggleTask)
-
-    app.route('/jsons')
-        .get(app.api.jsons.getAgendas)
 }

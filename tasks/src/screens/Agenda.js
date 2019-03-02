@@ -88,7 +88,7 @@ export default class Agenda extends Component{
                         </TouchableOpacity>
                     </View>
                     <View style={styles.titleBar}>
-                        <Text style={styles.title}>Hoje</Text>
+                        <Text style={styles.title}>{this.props.title}</Text>
                         <Text style={styles.subtitle}>
                             {moment().locale('pt-br').format('ddd,D [de] MMMM')}
                         </Text>

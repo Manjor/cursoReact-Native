@@ -11,6 +11,7 @@ const MenuRouters = {
         screen: props => <Agenda title='Hoje' daysAhead={0} {...props}/>,
         navigationOptions:{
             title: 'Hoje',
+            header: null
         }
     },
     Tomorrow: {
@@ -58,7 +59,10 @@ const AppNavigator = createStackNavigator({
         })
     },
     Home: {
-        screen: MenuNavigator
+        screen: MenuNavigator,
+        navigationOptions:()=> ({
+            header: null
+        })
     }
 })
 

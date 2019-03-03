@@ -5,7 +5,8 @@ import {
     View,
     ImageBackground,
     TouchableOpacity,
-    Alert
+    Alert,
+    AsyncStorage
 } from 'react-native'
 import commonStyles from '../commonStyles'
 import backgroundImage from '../../assets/imgs/login.jpg'
@@ -29,6 +30,7 @@ export default class Auth extends Component {
                 password: this.state.password
             })
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
+            AsyncStorage.setItem('userData',JSON.stringify(res.data))
             this.props.navigation.navigate('Home',res.data)
         }catch (e) {
             Alert.alert('Erro', 'Usuário ou Senha Invalidos')

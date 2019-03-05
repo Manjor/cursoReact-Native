@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Header from './src/components/Header'
-import { View, Text } from 'react-native'
+import { View, Text,StyleSheet } from 'react-native'
 import Post from './src/components/Post'
 
 export default class App extends Component {
@@ -13,7 +13,7 @@ export default class App extends Component {
     ]
 
     return (
-      <View>
+      <View style={styles.container}>
         <Header/>
         <Post image={require('./assets/imgs/fence.jpg')} 
               comments={comments} />  
@@ -22,3 +22,11 @@ export default class App extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#F5FCFF'
+  }
+})

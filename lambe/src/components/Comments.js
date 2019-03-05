@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         marginTop: 5
     },
     nickname: {
-        marginLeft: 5,
+        marginHorizontal: 5,
         fontWeight: 'bold',
         color: '#444'
     },

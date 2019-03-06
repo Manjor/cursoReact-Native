@@ -16,6 +16,10 @@ class Login extends Component{
         this.props.navigation.navigate('Profile')
     }
 
+    signup = ()=>{
+        this.props.navigation.navigate('Register')
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -28,7 +32,7 @@ class Login extends Component{
                 <TouchableOpacity onPress={this.login} style={styles.button}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {}} style={styles.button}>
+                <TouchableOpacity onPress={this.signup} style={styles.button}>
                     <Text style={styles.buttonText}>Criar Nova Conta</Text>
                 </TouchableOpacity>
             </View>

@@ -2,17 +2,23 @@ import React from 'react'
 import {
     Text, View
 } from 'react-native'
-import { createBottomTabNavigator, createStackNavigator ,createAppContainer } from 'react-navigation'
+import { createBottomTabNavigator, createSwitchNavigator,createStackNavigator, createAppContainer } from 'react-navigation'
 import Icon from 'react-native-vector-icons/FontAwesome5'
 
 import Feed from './screens/Feed'
 import AddPhoto from './screens/AddPhoto'
 import Profile from './screens/Profile'
 import Login from './screens/Login'
+import Register from './screens/Register'
 
-const LoginOrProfileRouter = createStackNavigator({
+const authRouter = createStackNavigator({
+    Login:{ screen: Login, navigationOptions: {title: 'Login'}},
+    Register: { screen: Register, navigationOptions:{ title: 'Register'}}
+})
+
+const LoginOrProfileRouter = createSwitchNavigator({
     Profile: Profile,
-    Auth: Login
+    Auth: authRouter
 })
 
 const MenuRoutes = {

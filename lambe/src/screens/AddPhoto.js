@@ -1,4 +1,6 @@
 import React,{ Component } from 'react'
+import { connect } from 'react-redux'
+import { addPost } from '../store/actions/posts'
 import {
     View,
     Text,
@@ -32,7 +34,18 @@ class AddPhoto extends Component{
     }
 
     save = async () =>{
-        Alert.alert('Imagem Adicionada!', this.state.comment )
+        this.props.onAddPost({
+            id: Math.random(),
+            nickname: this.props.name,
+            email: this.props.email,
+            image: this.state.image,
+            comments:[
+                { nickname: this.props.name, comment: this.state.comment }
+            ]
+        })
+        this.setState({ image: null, comment: '' })
+        Alert.alert('Postado', 'Postado com Sucesso!')
+        this.props.navigation.navigate('Feed')
     }
 
     render(){
@@ -46,7 +59,7 @@ class AddPhoto extends Component{
                     <TouchableOpacity onPress={this.pickImage} style={styles.button}>
                         <Text style={styles.buttonText}>Escolha a Foto</Text>
                     </TouchableOpacity>
-                    <TextInput planceholder="Algum Comentário para a foto?"
+                    <TextInput placeholder='Algum Comentário para a foto?'
                         style={styles.input} value={this.state.comment}
                         onChangeText={ comment => this.setState({ comment })} />
                         <TouchableOpacity onPress={this.save} style={styles.buttonText}>
@@ -87,8 +100,20 @@ const styles = StyleSheet.create({
     },
     input:{
         marginTop: 20,
-        width: '90%'
+        width: '90%',
     }
 })
 
-export default AddPhoto
+const mapStateToProps = ({ user }) =>{
+    return{
+        name: user.name,
+        email: user.email
+    }
+}
+const mapDispatchToProps = dispatch =>{
+    return {
+        onAddPost: post => dispatch(addPost(post))
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AddPhoto)

@@ -16,7 +16,7 @@ class Feed extends Component{
                     data={this.props.posts}
                     keyExtractor={item => `${item.id}`}
                     renderItem={({item}) => 
-                        <Post key={item.id} {...item}/> }/>
+                        <Post key={item.id} {...item} /> }/>
             </View>
         )
     }

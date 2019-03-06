@@ -17,8 +17,8 @@ const authRouter = createStackNavigator({
 })
 
 const LoginOrProfileRouter = createSwitchNavigator({
-    Profile: Profile,
-    Auth: authRouter
+    Auth: authRouter,
+    Profile: Profile
 })
 
 const MenuRoutes = {

@@ -10,7 +10,7 @@ import { Gravatar} from 'react-native-gravatar'
 class Profile extends Component{
 
     logout = () =>{
-
+        this.props.navigation.navigate('Auth')
     }
 
     render(){
@@ -22,7 +22,7 @@ class Profile extends Component{
                 <Gravatar options={options} style={styles.avatar}/>
                 <Text style={styles.nickname}>Fulando de Tal</Text>
                 <Text style={styles.email}>fulanodetal@gmail.com</Text>
-                <TouchableOpacity onPRess={ this.logout } style={styles.button}>
+                <TouchableOpacity onPress={ this.logout } style={styles.button}>
                     <Text style={styles.buttonText}>Sair</Text>
                 </TouchableOpacity>
             </View>

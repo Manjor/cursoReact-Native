@@ -23,6 +23,19 @@ class AddPhoto extends Component{
         comment: '',
     }
 
+    //Quando as Propriedades de um componente for atualizado
+    //Recebe as propriedades anteriores a atualização
+    componentDidUpdate = prevProps =>{
+        if(prevProps.loading && !this.props.loading){
+            //Limpa o formulário uma vez que o post post foi criado
+            this.setState({
+                image: null,
+                comment: ''
+            })
+            this.props.navigation.navigate('Feed')
+        }
+    }
+
     pickImage = () =>{
         if(!this.props.name){
             Alert.alert('Falha', noUser)
@@ -54,9 +67,6 @@ class AddPhoto extends Component{
                 { nickname: this.props.name, comment: this.state.comment }
             ]
         })
-        this.setState({ image: null, comment: '' })
-        Alert.alert('Postado', 'Postado com Sucesso!')
-        this.props.navigation.navigate('Feed')
     }
 
     render(){
@@ -74,7 +84,9 @@ class AddPhoto extends Component{
                         editable={this.props.name !== null}
                         style={styles.input} value={this.state.comment}
                         onChangeText={ comment => this.setState({ comment })} />
-                        <TouchableOpacity onPress={this.save} style={styles.buttonText}>
+                        <TouchableOpacity onPress={this.save} 
+                            disabled={this.props.loading}
+                            style={[styles.buttonText, this.props.loading? styles.buttonDisabled : {}]}>
                             <Text style={styles.buttonText}>Salvar</Text>
                         </TouchableOpacity>
                 </View>
@@ -110,16 +122,20 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#4286f4'
     },
+    buttonDisabled:{
+        backgroundColor: '#AAA',
+    },
     input:{
         marginTop: 20,
         width: '90%',
     }
 })
 
-const mapStateToProps = ({ user }) =>{
+const mapStateToProps = ({ user, posts }) =>{
     return{
         name: user.name,
-        email: user.email
+        email: user.email,
+        loading: posts.isUploading
     }
 }
 const mapDispatchToProps = dispatch =>{

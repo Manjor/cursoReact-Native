@@ -46,11 +46,11 @@ export const createUser = user =>{
                         text: 'Ocorreu um erro inesperado!'
                     }))
                 })
-                    .then(res =>{
-                        dispatch(setMessage({
-                            title: 'Sucesso',
-                            text: 'Usuário criado com Sucesso.'
-                        }))
+                    .then(() =>{
+                        delete user.password
+                        user.id = res.data.localId
+                        dispatch(userLogged(user))
+                        dispatch(userLoaded())
                     })
             }
         })
@@ -93,7 +93,7 @@ export const login = user => {
                         }))
                     })
                     .then(res =>{
-                        user.password = null,
+                        delete user.password,
                         user.name = res.data.name,
                         dispatch(userLogged(user))
                         dispatch(userLoaded())

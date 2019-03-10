@@ -8,7 +8,7 @@ import axios from 'axios'
 
 export const addPost = post =>{
     
-    return dispatch =>{
+    return (dispatch,getState) =>{
         dispatch(creatingPost())
         axios({
             url: 'uploadImage',
@@ -26,7 +26,7 @@ export const addPost = post =>{
         })
         .then(resp =>{
             post.image = resp.data.imageUrl
-            axios.post('/posts.json',{...post})
+            axios.post(`/posts.json?auth=${getState().user.token}`,{...post})
                 .catch(err => {
                     dispatch(setMessage({
                         title: 'Erro',
@@ -48,7 +48,7 @@ export const addPost = post =>{
 }
 
 export const addComment = payload =>{
-    return dispatch =>{
+    return (dispatch,getState) =>{
         axios.get(`/posts/${payload.postId}.json`)
             .catch(err =>{
                 dispatch(setMessage({
@@ -59,7 +59,7 @@ export const addComment = payload =>{
             .then(res => {
                 const comments = res.data.comments || []
                 comments.push(payload.comment)
-                axios.patch(`/posts/${payload.postId}.json`, { comments })
+                axios.patch(`/posts/${payload.postId}.json?auth=${getState().user.token}`, { comments })
                     .catch(err => {
                         dispatch(setMessage({
                             title: 'Erro',

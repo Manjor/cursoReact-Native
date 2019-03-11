@@ -4,6 +4,7 @@ import {
     LOADING_USER,
     USER_LOADED
 } from './actionTypes'
+import { setMessage } from './message'
 import axios from 'axios'
 
 const authBaseUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty'
@@ -29,14 +30,24 @@ export const createUser = user =>{
             password: user.password,
             returnSecureToken: true
         })
-        .catch(err => console.log(err))
+        .catch(err =>{
+            dispatch(setMessage({
+                title: 'Erro',
+                text: 'Ocorreu um erro inesperado!'
+            }))
+        })
         .then(res =>{
             if(res.data.localId){
                 axios.put(`/users/${res.data.localId}.json`,{
                     name: user.name
-                }).catch(err => console.log(err))
-                    .then(res =>{
-                        console.log('Usuário criado com Sucesso.')
+                }).catch(err => {
+                    dispatch(setMessage({
+                        title: 'Erro',
+                        text: 'Ocorreu um erro inesperado!'
+                    }))
+                })
+                    .then(() =>{
+                        dispatch(login(user))
                     })
             }
         })
@@ -63,13 +74,24 @@ export const login = user => {
             password: user.password,
             returnSecureToken: true
         })
-            .catch( err => console.log(err))
+            .catch( err => {
+                dispatch(setMessage({
+                    title: 'Erro',
+                    text: 'Ocorreu um erro inesperado!'
+                }))
+            })
             .then(res =>{
                 if(res.data.localId){
+                    user.token = res.data.idToken
                     axios.get(`/users/${res.data.localId}.json`)
-                    .catch(err => console.log(err))
+                    .catch(err => {
+                        dispatch(setMessage({
+                            title: 'Erro',
+                            text: 'Ocorreu um erro inesperado!'
+                        }))
+                    })
                     .then(res =>{
-                        user.password = null,
+                        delete user.password,
                         user.name = res.data.name,
                         dispatch(userLogged(user))
                         dispatch(userLoaded())
